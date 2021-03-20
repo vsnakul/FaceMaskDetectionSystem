@@ -1,0 +1,28 @@
+curl -X PUT "localhost:9200/experimental_index/_mapping?pretty" -H 'Content-Type: application/json' -d'
+{
+  "properties": {
+    "email": {
+      "type": "integer"
+    }
+  }
+}
+'
+
+
+curl -X DELETE "localhost:9200/solar_system?pretty"
+
+curl -X POST "localhost:9200/solar_system/planets/1"-H 'Content-Type: application/json' -d'
+{
+
+"_name": "mars"
+}
+'
+
+curl -X PUT "localhost:9200/solar_system/planets/1"-H 'Content-Type: application/json' -d'
+{
+
+"_name": "mercury"
+}
+'
+curl -X PUT "localhost:9200/solar_system?pretty"
+
