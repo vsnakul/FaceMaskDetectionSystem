@@ -13,10 +13,10 @@ import time
 import cv2
 import os
 
-
 def detect_and_predict_mask(frame, faceNet, maskNet):
 	# grab the dimensions of the frame and then construct a blob
 	# from it
+	print("Constructing Blob....")
 	(h, w) = frame.shape[:2]
 	blob = cv2.dnn.blobFromImage(frame, 1.0, (300, 300),
 		(104.0, 177.0, 123.0))
@@ -24,6 +24,7 @@ def detect_and_predict_mask(frame, faceNet, maskNet):
 	# pass the blob through the network and obtain the face detections
 	faceNet.setInput(blob)
 	detections = faceNet.forward()
+	print("Performing Detections...")
 
 	# initialize our list of faces, their corresponding locations,
 	# and the list of predictions from our face mask network
@@ -35,6 +36,7 @@ def detect_and_predict_mask(frame, faceNet, maskNet):
 	for i in range(0, detections.shape[2]):
 		# extract the confidence (i.e., probability) associated with
 		# the detection
+		print("Looping over the detections...")
 		confidence = detections[0, 0, i, 2]
 
 		# filter out weak detections by ensuring the confidence is
@@ -60,6 +62,7 @@ def detect_and_predict_mask(frame, faceNet, maskNet):
 
 			# add the face and bounding boxes to their respective
 			# lists
+			print("Appending faces to the list...")
 			faces.append(face)
 			locs.append((startX, startY, endX, endY))
 
@@ -113,6 +116,7 @@ class VideoCamera(object):
 		while True:
 			# grab the frame from the threaded video stream and resize it
 			# to have a maximum width of 400 pixels
+			print("Grabbing the faces and resizing...")
 			ret, frame = self.video.read()
 			frame = imutils.resize(frame, width=400)
 
@@ -126,14 +130,14 @@ class VideoCamera(object):
 				# unpack the bounding box and predictions
 				(startX, startY, endX, endY) = box
 				(mask, withoutMask) = pred
-				print("it is green colour")
-				print(mask)
+				print("Detection completed...")
+
 				# determine the class label and color we'll use to draw
 				# the bounding box and text
 				label = "Mask" if mask > withoutMask else "No Mask"
 				color = (0, 255, 0) if label == "Mask" else (0, 0, 255)
 
-				# include the probability in the label
+				# include the probability in the labelpi
 				label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
 
 				# display the label and bounding box rectangle on the output
@@ -142,6 +146,7 @@ class VideoCamera(object):
 					cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
 				cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
 			ret, jpeg = cv2.imencode('.jpg', frame)
+			print("Here is the image printing in bytes ",jpeg.tobytes())
 			return jpeg.tobytes()
 
 		# show the output frame

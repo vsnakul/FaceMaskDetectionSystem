@@ -3,15 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+<style>
+ body{
+ margin :0;
+ padding : 0;
+ background : #FFFDD0;
+ height : 100%;
+ font-family : "Montserrat", san-serif;
+ }
+
+ .button {
+  display: inline-block;
+  padding: 15px 25px;
+  font-size: 24px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+.nav{
+grid-row: 1;
+grid-column : 5;
+}
+
+.item1{
+grid-column: 2/4;
+grid-row: 2/3;
+}
+
+.item2{
+grid-row: 3/4;
+grid-column: 4/6;
+}
+
+.button:hover {background-color: #3e8e41}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+h1{
+color : rgb(37, 102, 73);
+ font-family : "Lobster", san-serif;
+ font-size : 2rem;
+}
+
+h2{
+color : rgb(37, 102, 73);
+ font-weight : lighter;
+ font-size : 1.5rem;
+}
+
+.content{
+display: grid;
+min-height : 90vh;
+grid-template-columns : 5% repeat(4, 2fr) 5%;
+grid-template-rows : 1fr repeat(2, 2fr)  1fr
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+<!--  background-color: #333;-->
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+color : rgb(37, 102, 73);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111;
+}
+
+
+    </style>
 </head>
 <body>
 <div class="container">
-    <div class="row">
-        <div class="col-lg-8  offset-lg-2">
-            <h3 class="mt-5">Live Streaming</h3>
-            <img src="{{ url_for('video_feed') }}" width="500px" height="500px">
-        </div>
-    </div>
+
+ <div class="content">
+     <div class="nav">
+  <ul>
+      <li><a class="active" href="#home">Home</a></li>
+       <li><a href="#news">Register</a></li>
+      <li><a href="#about">About</a></li>
+  </ul>
+
+ </div>
+     <div class="item1">
+          <h1> Face Mask Recogniser</h1>
+          <h2>Cutting Edge Technology with 99.9% Accuracy for Finding Faces With Face Mask</h2>
+          <a href="/recogniseEngine"><button class="button">Start Face Mask Detector</button></a>
+      </div>
+     <div class="item2">
+          <h1> Face Recogniser</h1>
+          <h2>Tool to Enable an Extra Layer of Secrity to your application through Face Recogition Tecnology.</h2>
+          <a href="/recogniseEngine"><button class="button">Start Face Authenticator</button></a>
+      </div>
+</div>
+
 </div>
 </body>
 </html>
