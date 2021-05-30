@@ -65,6 +65,7 @@ def image_detect(filename):
 			# compute the (x, y)-coordinates of the bounding box for
 			# the object
 			box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
+			print(box.size, "???????")
 			(startX, startY, endX, endY) = box.astype("int")
 
 			# ensure the bounding boxes fall within the dimensions of
@@ -97,6 +98,8 @@ def image_detect(filename):
 			# frame
 			cv2.putText(image, label, (startX, startY - 10),
 				cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
+			cv2.putText(image, str("Person "+str(i)), (startX, endY+20),
+						cv2.FONT_HERSHEY_SIMPLEX, 0.45, (255,0,0), 2)
 			cv2.rectangle(image, (startX, startY), (endX, endY), color, 2)
 
 	# show the output image
