@@ -1,6 +1,10 @@
 import pyrebase
 import os
 import requests
+import os.path
+from os import path
+
+import pathlib
 
 firebaseConfig = {
     "apiKey": "AIzaSyDlaeLQS7Ud2p4kOe_mWIT3sGtMjXy_JcQ",
@@ -21,6 +25,9 @@ users=db.child("Users").get()
 i=0
 for user in users.each():
     path=os.path.join(parent_directory,user.val()['Name'])
+    file=pathlib.Path(path)
+    if(file.exists()):
+        break
     print(path)
     print(type(path))
     os.mkdir(path)

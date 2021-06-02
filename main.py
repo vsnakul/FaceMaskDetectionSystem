@@ -22,6 +22,7 @@ import time
 from datetime import date
 from datetime import datetime
 import PIL
+import jsonify
 
 
 
@@ -30,6 +31,9 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 photos = UploadSet('photos', IMAGES)
 app.config['UPLOADED_PHOTOS_DEST'] = "examples"
 configure_uploads(app, photos)
+
+
+
 
 firebaseConfig = {
     "apiKey": "AIzaSyDlaeLQS7Ud2p4kOe_mWIT3sGtMjXy_JcQ",
@@ -70,6 +74,7 @@ def gen2(detect_mask_video_for_implementation):
     isUploaded=False
     while True:
         jpeg, counter, cv2 = detect_mask_video_for_implementation.get_frame()
+
         frame=jpeg.tobytes()
         if counter >= 10:
             print("inside counter condition and counter value is ",counter)
@@ -80,31 +85,23 @@ def gen2(detect_mask_video_for_implementation):
                 isUploaded=True
                 firebase = pyrebase.initialize_app(firebaseConfig)
                 realtimeDatabase = firebase.database()
-
                 today = date.today()
-
                 # dd/mm/YY
                 d1 = today.strftime("%d/%m/%Y")
-
                 now = datetime.now()
-
                 current_time = now.strftime("%H:%M:%S")
-
                 current_time_in_millisec=round(time.time() * 100)
                 data={"date":str(d1), "time": str(current_time), "image": str(current_time_in_millisec)}
-                realtimeDatabase.child("log").set(data)
+                realtimeDatabase.child("log").push(data)
                 storage = firebase.storage()
                 path_on_cloud = "images/" + str(current_time_in_millisec) + ".jpeg"
-                storage.child(path_on_cloud).put("test.jpg")
-
-
+                strings = time.strftime("%Y,%m,%d,%H,%M")
+                storage.child(path_on_cloud).put(strings+".jpg")
             book = openpyxl.load_workbook('dummy_db.xlsx')
-
             sheet = book.active
             sheet['A2'] = 1
             book.save('dummy_db.xlsx')
             print("1 value added")
-
             print("redirection ended")
 
         yield (b'--frame\r\n'
@@ -116,7 +113,6 @@ def generate_frames_for_identification(facial_recognition_module):
     while True:
         print("geenrater framres inside whule")
         frame = facial_recognition_module.generate_frames_to_show()
-
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
@@ -125,7 +121,6 @@ def generate_frames_for_identification(facial_recognition_module):
 def index2():
     # rendering webpage
     print("index2() method called")
-
     return render_template('videocapture.html')
 
 
@@ -144,41 +139,24 @@ def next_stage():
     cell = int(cellValue.value)
     if cell==1:
         print("inside next stage cell=1")
+
+
         return redirect(url_for('facial_recognition'))
     else:
         print("inside next stage else")
-        return render_template('implementation_page.html',toast='You cannot because you dont have mask')
+        return render_template('implementation_page.html',toast='Sorry.You cant use this service because you dont have a mask')
 
 
 
 
 @app.route('/facial_recognition')
 def facial_recognition():
-
     print("index4() method called")
-    #book = openpyxl.load_workbook('dummy_db.xlsx')
-    #sheet = book.active
-    #cellValue = sheet['A1']
-    #cell = int(cellValue.value)
-    #if cell==1:
     return render_template('facial_recognition.html')
-    #else:
-        #print("#########")
-        #flash("You cannnot perform facial recognition ,because you dont have a mask")
-        #return "OK"
 
 
 
 
-
-
-# @app.route('/getJavascriptData',methods=["POST"])
-# def get_javascript_data():
-#      actualFileName=request.json['filename']
-#      print("inside javascript method")
-#      print(actualFileName," javascript value is found")
-#      image_detect(actualFileName)
-#      return "OK";
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
@@ -215,6 +193,25 @@ def video_feed_for_implentation_part():
     print("inside implentation video feed")
     return Response(gen2(VideoCamera2()),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/log')
+def display_log():
+    times=[]
+    dates=[]
+    firebase = pyrebase.initialize_app(firebaseConfig)
+    realtimeDatabase = firebase.database()
+    storage = firebase.storage()
+    # imgurl = storage.child("1.jpg").put("1.jpg")
+    # img_url = storage.child("1.jpg").get_url(imgurl['downloadTokens'])
+    logdetails=realtimeDatabase.child("log").get()
+    for user in logdetails.each():
+        dates.append(user.val()["date"])
+        print(user.val()["date"])
+        times.append(user.val()["time"])
+        print(user.val()["time"])
+    return render_template('log.html',dates=dates,times=times)
+
+
 
 
 if __name__ == '__main__':

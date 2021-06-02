@@ -104,36 +104,6 @@ class VideoCamera(object):
 				cv2.putText(frame, label, (startX, startY - 10),
 					cv2.FONT_HERSHEY_SIMPLEX, 0.45, color, 2)
 				cv2.rectangle(frame, (startX, startY), (endX, endY), color, 2)
-				# actualStartX=startX
-				# actualStartY=startY
-				# actualendX=endX
-				# actualendY=endY
-				#cv2.line(frame,(startX,startY),(startX+15,startY),color,2)
-				#startX=startX+15
-				#cv2.line(frame,(startX+7,startY),(startX+25,startY),color,2)
-				gap=7
-				# x1=startX
-				# y1=startY
-				# x2=endX
-				# y2=endY
-				# length=15
-				# #draws the top horizontal
-				# while True:
-				# 	cv2.line(frame, (x1, actualStartY), (x1+length,actualStartY), color, 2)
-				# 	x1=x1+7+length
-				# 	print("inside my while loop")
-				# 	if(x1>=actualendX):
-				# 		break
-				# #draws the right vertical
-				# while True:
-				# 	cv2.line(frame, (actualendX, y1), (actualendX, y1-length), color, 2)
-				# 	y1=y1-length-7
-				# 	print("inside my while loop")
-				# 	if(y1<=endY):
-				# 		break
-
-
-
 
 				print("value of start x ",startX)
 				print("value of start y ",startY)

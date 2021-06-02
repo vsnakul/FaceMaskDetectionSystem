@@ -169,7 +169,6 @@ class VideoCamera2(object):
                     self.sheet['A1']=0
                     self.book.save('dummy_db.xlsx')
 
-
                 # include the probability in the labelpi
                 label = "{}: {:.2f}%".format(label, max(mask, withoutMask) * 100)
 
@@ -182,7 +181,8 @@ class VideoCamera2(object):
             print("value of counter outside the place is",counter)
             # frames = jpeg.tobytes()
             de=cv2.imdecode(jpeg,cv2.IMREAD_COLOR)
-            cv2.imwrite('test.jpg', de)
+            strings = time.strftime("%Y,%m,%d,%H,%M")
+            cv2.imwrite(strings+'.jpg', de)
             return jpeg,counter,cv2
 
     # show the output frame

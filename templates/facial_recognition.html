@@ -3,8 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+    body{
+     background : #FFFDD0;
+    }
+     .row{
+        display: grid;
+        min-height : 90vh;
+        grid-template-columns : 10% repeat(4, 3fr) 5%;
+        grid-template-rows : 5% repeat(3, 2fr)  1fr
+    }
+        img{
+       border-style: solid;
+       grid-column : 2/5;
+       grid-row : 3/6;
+       height :370px;
+       width :658px;
+       border-color: rgb(37, 102, 73);;
+    }
+
+    </style>
 </head>
 <body>
+<div class="row">
     <img src="{{ url_for('facial_recognition_feed') }}" width="500" height="500">
+</div>
 </body>
 </html>

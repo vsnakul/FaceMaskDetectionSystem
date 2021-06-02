@@ -57,7 +57,6 @@ for imagePath in imagePaths:
 	image = load_img(imagePath, target_size=(224, 224))
 	image = img_to_array(image)
 	image = preprocess_input(image)
-
 	# update the data and labels lists, respectively
 	data.append(image)
 	labels.append(label)
@@ -71,8 +70,8 @@ lb = LabelBinarizer()
 labels = lb.fit_transform(labels)
 labels = to_categorical(labels)
 
-# partition the data into training and testing splits using 75% of
-# the data for training and the remaining 25% for testing
+# partition the data into training and testing splits using 80% of
+# the data for training and the remaining 20% for testing
 (trainX, testX, trainY, testY) = train_test_split(data, labels,
 	test_size=0.20, stratify=labels, random_state=42)
 

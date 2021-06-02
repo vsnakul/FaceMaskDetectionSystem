@@ -3,13 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <title>Here we will see, how our product can be implemented as a Service</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+
+    body{
+     background : #FFFDD0;
+    }
+
+    .row{
+        display: grid;
+        min-height : 90vh;
+        grid-template-columns : 10% repeat(4, 3fr) 5%;
+        grid-template-rows : 5% repeat(3, 2fr)  1fr
+    }
+        img{
+       border-style: solid;
+       grid-column : 2/5;
+       grid-row : 3/6;
+       height :370px;
+       width :658px;
+       border-color: rgb(37, 102, 73);;
+    }
+
+     h3{
+         font-family : "Lobster", san-serif;
+        font-size : 3rem;
+        grid-column : 2/4;
+        grid-row : 1/2;
+        color : rgb(37, 102, 73);
+
+    }
+
+    .log{
+          grid-column : 4/6;
+       grid-row : 3/6;
+   }
+    </style>
 </head>
 <body>
-<h3>Face Mask Detection</h3>
+<div class="row">
+    <h3 class="">Face Mask Detection</h3>
 <img src="{{ url_for('video_feed_for_implentation_part') }}" width="500" height="500">
-<a href="/next_stage">
-    <button class="button">Start Face Authenticator</button>
+    <div class="log">
+        <a href="/next_stage">
+    <button class="button">Take Attendance</button>
 </a>
 <p>{{toast}}</p>
+    </div>
+</div>
 </body>
 </html>

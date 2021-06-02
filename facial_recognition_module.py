@@ -24,7 +24,6 @@ class FacialIdentificationSystem(object):
         print('Loading known faces...')
         self.known_faces = []
         self.known_names = []
-
         # We oranize known faces as subfolders of KNOWN_FACES_DIR
         # Each subfolder's name becomes our label (name)
         for name in os.listdir(KNOWN_FACES_DIR):
@@ -49,8 +48,6 @@ class FacialIdentificationSystem(object):
     def generate_frames_to_show(self):
 
         while True:
-
-
             ret,image=self.video.read()
             print("inside generate ")
             locations = face_recognition.face_locations(image,number_of_times_to_upsample=0,model='hog')
